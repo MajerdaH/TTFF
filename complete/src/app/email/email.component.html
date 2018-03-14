@@ -1,0 +1,60 @@
+<div *ngIf="modify" class="card card-body mb-0" >
+    <div class="card-header">
+      <strong>  {{pname}}  </strong> 
+    </div>
+     <button  type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button><button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button><button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
+    </div>
+
+<div *ngIf="operation"  id="content">
+    Add Operations to <strong>{{pname}}</strong>
+    <div class="table-responsive" >
+        <table id="customers">
+          <thead>
+            <tr>
+              <th>
+                Operation Name
+              </th>
+              <th>
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+           <tr *ngFor="let Operation of OperationsArray; let i=index">
+             <td>
+              {{Operation}}
+             </td>
+             <td>
+               <button   type="button" (click)="deleteFieldValue(i)" class="lil_btn">Delete</button>
+             </td>
+          </tr>
+          <tr>
+            <td>
+              <input  type="text" autofocus="autofocus" [(ngModel)]="newAttribute" name="newAttribute" />
+           </td>
+           <td>
+              <button  type="button" (click)="addFieldValue()" class="lil_btn">Add</button>
+           </td>
+          </tr>
+                
+          </tbody>
+          <button  type="button" (click)="onSubmitOp()">Submit</button>
+        </table>
+       
+      </div>
+    
+  </div>
+
+  <div *ngIf="OperationsNotAdded">
+      <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          <strong>Fail !</strong> Some Operations Exist With The Same Names
+        </div>
+  </div>
+  <div *ngIf="OperationsAdded" >
+    <div class="alert_suc">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>Success!</strong> Operations Added With Success.
+      </div>
+    </div>
+  

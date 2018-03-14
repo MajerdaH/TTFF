@@ -1,0 +1,62 @@
+//Light theme
+$light-theme-background: (
+  background:       $body-bg,
+  header:           white,
+  sidebar:         #254b92,
+  brand:           #254b92,
+  hover:            #254b92,
+  hover-o:           #254b92,
+  card:             white,
+  modal:            white,
+  secondary-button: white,
+  selected-cell:    theme-colors("primary"),
+  chart-tooltip:   #173fc4,
+);
+
+$light-theme-foreground: (
+  base:             $body-color,
+  header:           $body-color,
+  header-hover:     black,
+  sidebar:          rgba(white,.56),
+  sidebar-hover:    white,
+  brand:            white,
+  divider:          #173fc4,
+  disabled:         #173fc4,
+  muted-text:       #173fc4,
+  chart-grid:         #173fc4,
+);
+.theme-light {
+  @include theme($light-theme-background, $light-theme-foreground);
+}
+
+//Dark Theme
+$dark-theme-background: (
+  background:       #173fc4,
+  header:           map_get($mat-grey, 800),
+  sidebar:         #173fc4,
+  brand:           #173fc4,
+  hover:            rgba(white, 0.04),
+  hover-o:          rgba(white, 0.05),
+  card:             map_get($mat-grey, 800),
+  modal:            map_get($mat-grey, 800),
+  secondary-button: map-get($mat-grey, 800),
+  selected-cell:    theme-colors("primary"),
+  chart-tooltip:   #173fc4,
+);
+
+$dark-theme-foreground: (
+  base:             white,
+  header:           rgba(white, 0.7),
+  header-hover:     white,
+  sidebar:          rgba(white,.56),
+  sidebar-hover:    white,
+  brand:            white,
+  divider:          rgba(white, 0.12),
+  disabled:         rgba(white, 0.3),
+  muted-text:       rgba(white, 0.3),
+  chart-grid:          rgba(white, 0.05),
+);
+
+.theme-dark {
+  @include theme($dark-theme-background, $dark-theme-foreground);
+}

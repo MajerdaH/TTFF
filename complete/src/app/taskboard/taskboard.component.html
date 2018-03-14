@@ -1,0 +1,475 @@
+<!--><div class="taskboard page-height">
+  <div class="taskboard-wrapper">
+    <div class="taskboard-list">
+      <h6 class="taskboard-header">Backlog</h6>
+      <div class="taskboard-cards" [dragula]='"task-group"'>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Responsive bug</div>
+          <small class="card-text text-muted">Etiam porta sem malesuada magna mollis euismod.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Travel checklist</div>
+          <small class="card-text text-muted">Curabitur blandit tempus porttitor.</small>
+        </div>
+        <div class="taskboard-task task-status-success">
+          <div class="taskboard-task-title">Budget review</div>
+          <small class="card-text text-muted">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskboard-wrapper">
+    <div class="taskboard-list">
+      <h6 class="taskboard-header">To Do</h6>
+      <div class="taskboard-cards" [dragula]='"task-group"'>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">QA Testing</div>
+          <small class="card-text text-muted">Etiam porta sem malesuada magna mollis euismod.</small>
+        </div>
+        <div class="taskboard-task task-status-danger">
+          <div class="taskboard-task-title">Layout design</div>
+          <small class="card-text text-muted">Sed posuere consectetur est at lobortis. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</small>
+        </div>
+        <div class="taskboard-task task-status-info">
+          <div class="taskboard-task-title">Fix navigation menu</div>
+          <small class="card-text text-muted">Donec sed odio dui.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Update bootstrap 4</div>
+          <small class="card-text text-muted">Aenean lacinia bibendum nulla sed consectetur.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Run build tools</div>
+          <small class="card-text text-muted">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</small>
+        </div>
+        <div class="taskboard-task task-status-success">
+          <div class="taskboard-task-title">List article ideas</div>
+          <small class="card-text text-muted">Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Reactjs fixes</div>
+          <small class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small>
+        </div>
+        <div class="taskboard-task task-status-warning">
+          <div class="taskboard-task-title">Implement SSL</div>
+          <small class="card-text text-muted">Etiam porta sem malesuada magna mollis euismod.</small>
+        </div>
+        <div class="taskboard-task task-status-danger">
+          <div class="taskboard-task-title">Cleanup code</div>
+          <small class="card-text text-muted">Sollicitudin</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskboard-wrapper">
+    <div class="taskboard-list">
+      <h6 class="taskboard-header">In Process</h6>
+      <div class="taskboard-cards" [dragula]='"task-group"'>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">QOS Assessment</div>
+          <small class="card-text text-muted">Maecenas sed diam eget risus varius blandit sit amet non magna.</small>
+        </div>
+        <div class="taskboard-task task-status-warning">
+          <div class="taskboard-task-title">Schedule new tasks</div>
+          <small class="card-text text-muted">Sed posuere consectetur est at lobortis.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Add dashboard variants</div>
+          <small class="card-text text-muted">Nulla vitae elit libero, a pharetra augue.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Extended color scheme support</div>
+          <small class="card-text text-muted">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</small>
+        </div>
+        <div class="taskboard-task task-status-info">
+          <div class="taskboard-task-title">Merge unit tests</div>
+          <small class="card-text text-muted">Maecenas sed diam eget risus varius blandit sit amet non magna.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Test final version</div>
+          <small class="card-text text-muted">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskboard-wrapper">
+    <div class="taskboard-list">
+      <h6 class="taskboard-header">In Review</h6>
+      <div class="taskboard-cards" [dragula]='"task-group"'>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Integrate Angular 4</div>
+          <small class="card-text text-muted">Nulla vitae elit libero, a pharetra augue.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Additional fields</div>
+          <small class="card-text text-muted">Donec id elit non mi porta gravida at eget metus.</small>
+        </div>
+        <div class="taskboard-task task-status-danger">
+          <div class="taskboard-task-title">Draggable task board</div>
+          <small class="card-text text-muted">Sed posuere consectetur est at lobortis.</small>
+        </div>
+        <div class="taskboard-task task-status-danger">
+          <div class="taskboard-task-title">Setup CI server</div>
+          <small class="card-text text-muted">Maecenas faucibus mollis interdum.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Assign new tasks</div>
+          <small class="card-text text-muted">Nullam quis risus eget urna mollis ornare vel eu leo.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Contact administrator</div>
+          <small class="card-text text-muted">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Commit changes</div>
+          <small class="card-text text-muted">Aenean lacinia bibendum nulla sed consectetur.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskboard-wrapper">
+    <div class="taskboard-list">
+      <h6 class="taskboard-header">Done</h6>
+      <div class="taskboard-cards" [dragula]='"task-group"'>
+        <div class="taskboard-task task-status-info">
+          <div class="taskboard-task-title">Store new files</div>
+          <small class="card-text text-muted">Sed posuere consectetur est at lobortis.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Build landing page</div>
+          <small class="card-text text-muted">Maecenas sed diam eget risus varius blandit sit amet non magna.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Setup basic layout</div>
+          <small class="card-text text-muted">Vestibulum id ligula porta felis euismod semper.</small>
+        </div>
+        <div class="taskboard-task">
+          <div class="taskboard-task-title">Graphical fixes</div>
+          <small class="card-text text-muted">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</small>
+        </div>
+        <div class="taskboard-task task-status-warning">
+          <div class="taskboard-task-title">Email alerts</div>
+          <small class="card-text text-muted">Donec sed odio dui.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <form ng-form="">
+    <label for="fname">Project Name</label>
+    <input type="text" id="pname" name="pname" placeholder="Project Name..">
+
+    <label for="cname">Client Name</label>
+    <select id="cname" name="cname">
+      <option value="Oreedo">Ooredoo</option>
+      <option value="Orange">Orange</option>
+    </select>
+
+    <label for="ptype">Project Type</label>
+    <select id="ptype" name="ptype">
+      <option value="BP">BP</option>
+      <option value="BP">SP</option>
+    </select>
+  
+    <input type="submit" value="Submit" (click)="Submit()">
+  </form>
+</div>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head><-->
+<div class="card" >
+  <div class="card" *ngIf="basic">
+      <div class="card-header">
+       Projects List
+      </div>
+     <!--> <ng2-smart-table [settings]="settings" [source]="ProjectsArray"></ng2-smart-table><-->
+
+      <div class="card-body"  >
+          <input type="Search" id="myinput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+        <div class="table-responsive">
+          <table id="customers">
+            <thead>
+              <tr>
+                <th>
+                  Project Name
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Client
+                </th>
+              
+                <th>
+                    Creation Date
+                  </th>
+                  <th>
+                      Status  
+                  </th>
+                  <th>
+                      Action
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--> <tr *ngFor="let Project of ProjectsArray; let i=index"><-->
+                
+                  <tr *ngFor="let Project of ProjectsArray; let i=index">
+                      <td>
+                        {{Project.projectName}}
+                    
+                      </td>
+                      <td>
+                          {{Project.templateType}}
+                      
+                        </td>
+                        <td>
+                            {{Project.clientName}}
+                        
+                         </td>
+                        <td>
+                            {{Project.projectCrDate}}
+                          
+                        </td>
+                        <td>
+                            {{Project.projectStatus}}
+                          
+                        </td>
+                   <td>
+                     
+                     <button  type="button" (click)="addFieldValue()" class="lil_btn">Update</button>
+                     <button  type="button" (click)="OnModify(Project.projectName)" class="lil_btn">Modify</button>
+
+                     <!-->
+                     <button  type="button" (click)="Download(Project.projectName)" class="lil_btn">Download</button>
+                     <button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button>
+                     <button  type="button" (click)="onOld(Project.projectName)" class="lil_btn">Add</button>
+                     <button  type="button" (click)="Checkout(Project.projectName, Project.clientName)" class="lil_btn">Checkout</button>
+                     <-->                       
+                   </td>
+                  </tr>
+                <tr>
+                <button  type="button" (click)="onNew()" class="lil_btn">Generate New Project</button>
+                 <button class="lil_btn" type="button" (click)="OnUpload()">Upload New Project</button> 
+                 <button class="lil_btn" type="button" (click)="onNew()">Checkout New Project</button>
+                </tr>
+              
+            </tbody>
+           
+          </table>
+        </div>
+      </div>
+    </div>
+    
+
+
+<!--><div *ngIf="basic">
+        <form #f="ngForm" (ngSubmit)="onSubmitNew(f)" novalidate>
+          <button>Generate New Project</button>
+        </form>
+
+        <form #f="ngForm" (ngSubmit)="onSubmitOld(f)" novalidate>
+            <button>Add Operation to Old Projects</button>
+          </form>
+  </div><-->
+
+<div *ngIf="addnew">
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <label for="pname">  Project Name</label>
+    <input  name="pname" placeholder="Project Name.." ngModel required #pname="ngModel" autofocus="autofocus">
+
+    <label for="cname">  Client Name</label>
+    <select name="cname" ngModel #cname="ngModel" (change)="onSelect($event.target.value)">
+        <option value="" disabled selected>Select your Client</option>
+      <option value="{{Client}}" *ngFor="let Client of ClientsArray">  {{Client}}</option>
+    </select>
+
+    <label for="ptype">  Project Type</label>
+    <select name="ptype" ngModel #pname="ngModel">
+        <option value="" disabled selected>Select Template</option>
+      <option *ngFor="let Template of TemplatesArray" value="{{Template}}">{{Template}}</option>
+    </select>
+  
+  <button>Submit</button>
+</form>
+</div>
+<div *ngIf="modify" class="card card-body mb-0" >
+  <div class="card-header">
+    <strong>  {{ProjectName}}  </strong> 
+  </div>
+   <button  type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button><button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button><button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
+  </div>
+
+<div *ngIf="upload">
+    <form #f="ngForm" (ngSubmit)="OnUpload(f)" novalidate>
+        <label for="pname">Workspace </label>
+        <!--  <input name="pname" placeholder="Project Name.." ngModel required #pname="ngModel">-->
+        
+          <select id="pname" name="pname"  [(ngModel)]="selectedvalue" required #pname="ngModel" >
+            <option *ngFor="let pro of Projects" [value]="pro" selected>{{pro}}</option>
+          </select>
+        
+          <label for="path">Path Project</label>
+          <input name="path" placeholder="Path from upload.." ngModel required #path="ngModel">
+        
+            <button class="btn btn-info">Upload</button>
+        
+          </form>
+      
+  
+    </div>
+
+<div *ngIf="OperationsNotAdded"
+     class="alert alert-danger">
+  Some Operations Already Exist
+</div>
+<div *ngIf="OperationsAdded" class="alert alert-success">
+    <strong>Success!</strong> Operations Added With Success.
+  </div>
+
+
+  <div *ngIf="showdivfail"
+     class="alert alert-danger">
+  This Project Already Exists
+</div>
+<div *ngIf="showdivsucc" class="alert alert-success" >
+    <strong>Success!</strong> Project Created With Success.
+  </div>
+  <div *ngIf="checkout" class="alert alert-success" >
+      <strong>Success!</strong> Project Checked Out With Success.
+    </div>
+
+  
+      <div *ngIf="operation"  id="content">
+      Add Operations to <strong>{{projname}}</strong>
+      <div class="table-responsive" >
+          <table id="customers">
+            <thead>
+              <tr>
+                <th>
+                  Operation Name
+                </th>
+                <th>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr *ngFor="let Operation of OperationsArray; let i=index">
+               <td>
+                {{Operation}}
+               </td>
+               <td>
+                 <button   type="button" (click)="deleteFieldValue(i)" class="lil_btn">Delete</button>
+               </td>
+            </tr>
+            <tr>
+              <td>
+                <input  type="text" autofocus="autofocus" [(ngModel)]="newAttribute" name="newAttribute" />
+             </td>
+             <td>
+                <button  type="button" (click)="addFieldValue()" class="lil_btn">Add</button>
+             </td>
+            </tr>
+                  
+            </tbody>
+            <button  type="button" (click)="onSubmitOp()">Submit</button>
+          </table>
+         
+        </div>
+      
+    </div>
+
+  
+
+<!--><div *ngIf="showdivsucc">
+    Create Operations
+      
+        <form #f="ngForm" (ngSubmit)="onSubmitOp(f)" novalidate>
+            <label for="opname">Operation Name </label>
+            <input  name="opname" placeholder="Operation Name.." ngModel required #opname="ngModel">
+          <button>Submit</button>
+        </form>
+
+        <button class="btn">
+            <span class="glyphicon glyphicon-plus">Add Operation</span>  
+        </button>
+</div><-->
+  
+  <!--><div >
+     Projects LIST
+        
+          <form #f="ngForm" (ngSubmit)="onSubmitOp(f)" novalidate>
+              <label for="opname">Operation Name </label>
+              <input  name="OperationName" placeholder="Operation Name.." ngModel required #opname1="ngModel">
+              <input  name="OperationName" placeholder="Operation Name.." ngModel required #opname2="ngModel">
+              <input  name="OperationName" placeholder="Operation Name.." ngModel required #opname3="ngModel">
+            <button>Submit</button>
+          </form>
+  
+  </div><-->
+
+ <!--> <div class="card" *ngIf="operation">
+      <div class="card-header">
+       Add Operations
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="customers">
+            <thead>
+              <tr>
+                <th>
+                  Operation Name
+                </th>
+                <th>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let Operation of OperationsArray; let i=index">
+                <td>
+                <input [(ngModel)]="Operation" class="form-control" type="text" name="Operation" placeholder="Operation"/>
+                  {{Operation}}
+                </td>
+                <td>
+                    <button   type="button" (click)="deleteFieldValue(i)" class="lil_btn">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <input  type="text" [(ngModel)]="newAttribute" name="newAttribute" />
+                </td>
+                <td>
+                    <button  type="button" (click)="addFieldValue()" class="lil_btn">Add</button>
+                </td>
+      
+              </tr>
+              
+            </tbody>
+            <button  type="button" (click)="onSubmitOp()">Submit</button>
+          </table>
+         
+        </div>
+      </div>
+    </div>
+  
+   <--> <!--><div >
+        <form  (ngSubmit)="onBack()" novalidate>
+            <button class="btn" >Go Back</button>
+        </form>
+         
+    </div><-->
+  </div>
+        
+
+

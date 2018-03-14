@@ -2,7 +2,11 @@
     <div class="card-header">
       <strong>  {{pname}}  </strong> 
     </div>
-     <button  type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button><button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button><button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
+     <button  type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button>
+     <button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button>
+     <button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
+     <button  type="button" (click)="AddRessources(ProjectName)" class="lil_btn">Add Ressources</button>
+
     </div>
 
 <div *ngIf="operation"  id="content">

@@ -29,6 +29,7 @@ export class EmailComponent implements OnInit {
   public operation: boolean;
   public projname: string;
   public modify: boolean;
+  public serviceUrl: string;
 
 
   constructor(
@@ -37,6 +38,7 @@ export class EmailComponent implements OnInit {
 
 
     ngOnInit() {
+      this.serviceUrl = '192.168.110.224';
       this.modify = true;
       this.sub = this.route
         .queryParams
@@ -61,9 +63,9 @@ export class EmailComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       this.jsonOperations = '{"CreateOperations":{"ProjectName":"' + this.pname + '","OperationName":' + JSON.stringify(this.OperationsArray) + '}}';
       console.log(this.jsonOperations);
-    
+
       // tslint:disable-next-line:max-line-length
-       this.http.post('http://192.168.110.224:8088/CreateOperation', this.jsonOperations).subscribe(data => {
+       this.http.post('http://' + this.serviceUrl + ':8088/CreateOperation', this.jsonOperations).subscribe(data => {
          console.log(data);
          this.data = data;
          if (this.data.GenerateOperationResponse.Status === 'FAILED') { this.OperationsNotAdded = true;
@@ -88,5 +90,10 @@ export class EmailComponent implements OnInit {
       deleteFieldValue(index) {
         console.log(index);
         this.OperationsArray.splice(index, 1);
+      }
+
+      // tslint:disable-next-line:one-line
+      AddRessources(){
+        this.router.navigate(['./docs'], { queryParams: { project: name } });
       }
 }

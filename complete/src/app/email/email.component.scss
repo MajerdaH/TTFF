@@ -49,6 +49,10 @@ td{
 
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #6d7686;}
+
 button{
   width: 100%;
   background-color: #254b92;
@@ -124,7 +128,7 @@ div {
 }
 
 .lil_btn{
-  width: 105px;
+  width: 200px;
   margin: 2.5px 4px;
 
 }
@@ -136,3 +140,20 @@ div {
    margin-left: 1250px;
  width: 200px;
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 70%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+

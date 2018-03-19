@@ -8,8 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { EmailComponent } from './email.component';
 import { EmailRoutes } from './email.routing';
 
+import { MenuItems } from '../shared/menu-items/menu-items';
+
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(EmailRoutes), SidebarModule,NgbModule,FormsModule],
+  imports: [CommonModule, RouterModule.forChild(EmailRoutes), SidebarModule, NgbModule, FormsModule],
   declarations: [EmailComponent]
 })
 

@@ -1,3 +1,4 @@
+
 <div *ngIf="modify" class="card card-body mb-0" >
     <div class="card-header">
       <strong>  {{pname}}  </strong> 
@@ -6,12 +7,15 @@
      <button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button>
      <button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
      <button  type="button" (click)="AddRessources(ProjectName)" class="lil_btn">Add Ressources</button>
+     <button  type="button" (click)="UploadWSDL()" class="lil_btn">WSDl Upload</button>
+     <button  type="button" (click)="AddJMS()" class="lil_btn">Add JMS</button>
 
     </div>
 
 <div *ngIf="operation"  id="content">
     Add Operations to <strong>{{pname}}</strong>
     <div class="table-responsive" >
+      <form #formCtrl="ngForm">
         <table id="customers">
           <thead>
             <tr>
@@ -34,7 +38,7 @@
           </tr>
           <tr>
             <td>
-              <input  type="text" autofocus="autofocus" [(ngModel)]="newAttribute" name="newAttribute" />
+              <input  type="text" autofocus="autofocus" [(ngModel)]="newAttribute" name="newAttribute" required ngControl="newAttributeCtrl"/>
            </td>
            <td>
               <button  type="button" (click)="addFieldValue()" class="lil_btn">Add</button>
@@ -42,8 +46,9 @@
           </tr>
                 
           </tbody>
-          <button  type="button" (click)="onSubmitOp()">Submit</button>
+          <button  type="button" (click)="onSubmitOp()" [disabled]="formCtrl.form.valid" >Submit</button>
         </table>
+      </form>
        
       </div>
     
@@ -61,4 +66,105 @@
       <strong>Success!</strong> Operations Added With Success.
       </div>
     </div>
+
+    <!--><div *ngIf="uploadwsdl"  >
+      <form #formCtrl="ngForm">
+         <input  type="text" autofocus="autofocus" [(ngModel)]="wsdlurl" name="wsdlurl" placeholder="Enter WSDL URL"/> 
+         OR Upload File <br>
+        <input type="file" [(ngModel)]="wsdlfile" name="wsdlfile">
+        <button  type="button" (click)="onSubmitUpload()" [disabled]="!formCtrl.form.valid" class="lil_btn" >Submit</button>
+      </form>
+    </div><-->
+
+    <div *ngIf="uploadwsdl">
+        <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
+            <label for="wsdlurl">  Enter WSDL URL</label>
+            <input  name="wsdlurl" placeholder="WSDl URL.." ngModel #wsdlurl="ngModel" autofocus="autofocus">
+
+        
+            <label for="wsdlfile">  OR Upload File</label>
+            <input  name="wsdlurl" type="file" ngModel #wsdlfile="ngModel" (change)="fileChange($event)" placeholder="Upload file" accept=".wsdl" id="avatar">
+            
+          
+          <button class="lil_btn">Submit</button>
+        </form>
+        </div>
+
+      <!-->  <div *ngIf="displayOperations">
+            <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
+                <label for="wsdlurl">  Enter WSDL URL</label>
+                <input  name="wsdlurl" placeholder="WSDl URL.." ngModel #wsdlurl="ngModel" autofocus="autofocus">
+    
+            
+                <label for="wsdlfile">  OR Upload File</label>
+                <input  name="wsdlurl" type="file" ngModel #wsdlfile="ngModel" (change)="fileChange($event)" placeholder="Upload file" accept="text/plain" id="avatar">
+                
+              
+              <button class="lil_btn">Submit</button>
+            </form>
+            </div><-->
+
+            <div *ngIf="successupload" >
+                <div class="alert_suc">
+                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                  <strong>Success!</strong> WSDL File added to <strong>{{pname}} </strong> With Success.
+                  </div>
+                </div>
+
+<div *ngIf="displayOperationsList">
+    <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
+           <table class="table">
+                <thead>
+                    <tr>
+                        
+                        <th>Operation Name</th><th><input type="checkbox" (change)=CheckAll(f)/></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Opname of WsdLOpsArray; let i=index">
+                        <td>
+                         {{Opname}} 
+                        </td>
+                        <td>
+                            <input #check type="checkbox" (change)="OnChecked(Opname, check.checked)" />
+                        </td>
+                        </tr>
+                    
+                </tbody>
+                <button  type="button"  class="lil_btn" (click)="SelectOperations()">Submit Operations</button>
+              </table>
+              </form>
+            </div>
+
+            
+            <div *ngIf="addLog">
+              <form #f="ngForm"  novalidate>
+                <table >
+                     
+                     <tbody>
+                       <tr>
+                         <td>Operation Name</td>
+                         <td>Add Log</td>
+                       </tr>
+                         <tr *ngFor="let Opname of SelectedOperations; let i=index">
+                             <td>
+                              {{Opname}} 
+                             </td>
+                             <td>
+                                <input type="checkbox" #Log  value="Info" (change)="chooseLogInfo(Opname, Log.checked)"> Log Info<br>
+                                <input type="checkbox" #Log  value="Exception" checked (change)="chooseLogException(Opname, Log.checked)"> Log Exception<br>
+                             
+                                </td>
+                             </tr>
+                         
+                     </tbody>
+                     <button  type="button" (click)="SubmitOperationsToService()" class="lil_btn">Submit Operations</button>
+                   </table>
+                   </form>
+          </div>
+          <div *ngIf="showActions">
+            <button  type="button" (click)="ShowActions()" class="lil_btn">Show Actions</button>
+        </div>
+          
   

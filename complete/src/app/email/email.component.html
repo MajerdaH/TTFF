@@ -4,9 +4,8 @@
       <strong>  {{pname}}  </strong> 
     </div>
      <button  type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button>
-     <button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button>
      <button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
-     <button  type="button" (click)="AddRessources(ProjectName)" class="lil_btn">Add Ressources</button>
+     <button  type="button" (click)="AddRessources(pname)" class="lil_btn">Add Ressources</button>
      <button  type="button" (click)="UploadWSDL()" class="lil_btn">WSDl Upload</button>
      <button  type="button" (click)="AddJMS()" class="lil_btn">Add JMS</button>
 
@@ -76,18 +75,21 @@
       </form>
     </div><-->
 
-    <div *ngIf="uploadwsdl">
+    <div *ngIf="uploadwsdlurl">
         <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
             <label for="wsdlurl">  Enter WSDL URL</label>
-            <input  name="wsdlurl" placeholder="WSDl URL.." ngModel #wsdlurl="ngModel" autofocus="autofocus">
-
-        
+            <input  name="wsdlurl" placeholder="WSDl URL.." ngModel #wsdlurl="ngModel" autofocus="autofocus" >
+            <a (click)="LoadFromUrl(f)"><b>Load File</b></a><br><br>
+            <button class="lil_btn">Submit</button>
+            </form></div>
+            <div *ngIf="uploadwsdlfile">
+                <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
             <label for="wsdlfile">  OR Upload File</label>
-            <input  name="wsdlurl" type="file" ngModel #wsdlfile="ngModel" (change)="fileChange($event)" placeholder="Upload file" accept=".wsdl" id="avatar">
-            
+            <input  name="wsdlurl" type="file" ngModel #wsdlfile="ngModel" (change)="fileChange($event)" placeholder="Upload file" accept=".wsdl" id="avatar" />
+            </form>
           
-          <button class="lil_btn">Submit</button>
-        </form>
+          
+          <button class="lil_btn" (click)="onSubmitUpload(f)">Submit</button>
         </div>
 
       <!-->  <div *ngIf="displayOperations">
@@ -110,6 +112,18 @@
                   <strong>Success!</strong> WSDL File added to <strong>{{pname}} </strong> With Success.
                   </div>
                 </div>
+                <div *ngIf="addCallSucc" >
+                  <div class="alert_suc">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <strong>Success!</strong> Call Operations are added to  <strong>{{pname}} </strong> With Success.
+                    </div>
+                  </div>
+                  <div *ngIf="addCallfail" >
+                    <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Fail!</strong>Some Operations might already exist in  <strong>{{pname}} </strong> Please Check Again.
+                      </div>
+                    </div>
 
 <div *ngIf="displayOperationsList">
     <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
@@ -152,14 +166,14 @@
                               {{Opname}} 
                              </td>
                              <td>
-                                <input type="checkbox" #Log  value="Info" (change)="chooseLogInfo(Opname, Log.checked)"> Log Info<br>
-                                <input type="checkbox" #Log  value="Exception" checked (change)="chooseLogException(Opname, Log.checked)"> Log Exception<br>
+                                <input type="checkbox" #Loginfo  value="Info" (change)="chooseLogInfo(Opname, Loginfo.checked)"> Log Info<br>
+                                <input type="checkbox" #Log  value="Exception" (change)="chooseLogException(Opname, Log.checked)"> Log Exception<br>
                              
                                 </td>
                              </tr>
                          
                      </tbody>
-                     <button  type="button" (click)="SubmitOperationsToService()" class="lil_btn">Submit Operations</button>
+                     <button  type="button" (click)="SubmitOperationsToService()" class="lil_btn">Create Calls</button>
                    </table>
                    </form>
           </div>

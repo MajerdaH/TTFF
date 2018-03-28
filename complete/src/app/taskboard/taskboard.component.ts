@@ -197,11 +197,11 @@ export class TaskboardComponent{
     this.OperationsArray.splice(index, 1);
   }
 
-  OnModify(name: string) {
+  OnModify(name: string , type: string, client: string) {
   /*  this.ProjectName = name;
     this.modify = true;
     this.basic = false;*/
- this.router.navigate(['./email'], { queryParams: { project: name } });
+ this.router.navigate(['./email'], { queryParams: { project: name, type: type, client: client} });
 
   }
 

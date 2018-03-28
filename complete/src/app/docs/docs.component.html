@@ -1,0 +1,253 @@
+<div class="card">
+    <div class="card" *ngIf="basic">
+      Add ressources to <strong> {{pname}} </strong>
+  
+      <div>
+        <h6>select a ressource type</h6>
+        <form #f="ngForm" (ngSubmit)="onFormSubmit(f)">
+  
+          <div *ngFor="let ressource of ressources">
+            <input type="radio" name="oneressource" value={{ressource}} (change)="radioChangeHandler($event)" ngModel required #oneressource="ngModel">
+            <i>{{ressource}}</i>
+          </div>
+  
+          <h6>select a type of configuration</h6>
+          <div *ngFor="let conf of configuration">
+            <input type="radio" name="oneconfiguration" value={{conf}} (change)="radioChangeHandler2($event)" ngModel required #oneconfiguration="ngModel">
+            <i>{{conf}}</i>
+          </div>
+  
+          <table>
+            <tr>
+              <td>
+  
+                <button (onclick)="addconfig(f)">Submit </button>
+              </td>
+            </tr>
+          </table>
+          <!-->
+          <div *ngIf="!oneconfiguration  && f.submitted && !isValidFormSubmitted" [ngClass]="'error'">
+            configuration required.
+          </div>
+          <div *ngIf="!oneressource && f.submitted && !isValidFormSubmitted" [ngClass]="'error'">
+            Ressource required.
+          </div>
+          <-->
+        </form>
+      </div>
+    </div>
+    <div *ngIf="addJDBC">
+      <form #ff="ngForm" (ngSubmit)="addNewRessourceJDBC(ff)" novalidate>
+        <label for="configuration_name">Configuration name </label>
+        <input name="configuration_name" placeholder="configuration name.." ngModel required #configuration_name="ngModel">
+  
+        <label for="host">HOST </label>
+        <input name="host" placeholder="Host  Value.." ngModel required #host="ngModel">
+  
+        <label for="port">PORT </label>
+        <input name="port" placeholder="PORT value.." ngModel required #port="ngModel">
+  
+        <label for="sid">SID </label>
+        <input name="sid" placeholder="SID NAME.." ngModel required #sid="ngModel">
+  
+        <label for="MaxConnections">MaxConnections</label>
+        <input name="MaxConnections" placeholder="Max Connections .." ngModel required #MaxConnections="ngModel">
+  
+        <label for="Username">Username</label>
+        <input name="Username" placeholder="Username.." ngModel required #Username="ngModel">
+  
+        <label for="password">password</label>
+        <input name="password" placeholder="password.." ngModel required #password="ngModel">
+  
+        <label for="timeout">timeout</label>
+        <input name="timeout" placeholder="timeout.." ngModel required #timeout="ngModel">
+        <button class="btn btn-info">Add</button>
+  
+      </form>
+    </div>
+    <div *ngIf="addHTTP">
+      <form #fff="ngForm" (ngSubmit)="addNewRessourceHTTP(fff)" novalidate>
+        <label for="configuration_name">Configuration name </label>
+        <input name="configuration_name" placeholder="configuration name.." ngModel required #configuration_name="ngModel">
+  
+        <label for="host">HOST </label>
+        <input name="host" placeholder="Host  Value.." ngModel required #host="ngModel">
+  
+        <label for="port">PORT </label>
+        <input name="port" placeholder="PORT value.." ngModel required #port="ngModel">
+  
+        <label for="ServerType">ServerType</label>
+        <input name="ServerType" placeholder="SID NAME.." ngModel required #ServerType="ngModel">
+        <button class="btn btn-info">Add</button>
+  
+      </form>
+    </div>
+    <div *ngIf="addEMS">
+      <form #ffff="ngForm" (ngSubmit)="addNewRessourceEMS(ffff)" novalidate>
+  
+        <label for="configuration_name">Configuration name </label>
+        <input name="configuration_name" placeholder="configuration name.." ngModel required #configuration_name="ngModel">
+  
+        <label for="username">username</label>
+        <input name="username" placeholder="Host  Value.." ngModel required #username="ngModel">
+  
+        <label for="password">password</label>
+        <input name="password" placeholder="passwordvalue.." ngModel required #password="ngModel">
+  
+        <label for="clientID">clientID</label>
+        <input name="clientID" placeholder="clientID.." ngModel required #clientID="ngModel">
+  
+        <label for="JNDI_url">JNDI_URL</label>
+        <input name="JNDI_url" placeholder="JNDI_URL.." ngModel required #JNDI_url="ngModel">
+  
+        <label for="JNDI_username">JNDI_username</label>
+        <input name="JNDI_username" placeholder="JNDI_username.." ngModel required #JNDI_username="ngModel">
+  
+        <label for="JNDI_password">JNDI_password</label>
+        <input name="JNDI_password" placeholder="JNDI_password.." ngModel required #JNDI_password="ngModel">
+  
+  
+        <button class="btn btn-info">Add</button>
+  
+      </form>
+    </div>
+    <div *ngIf="addFTP">
+      <form #fffff="ngForm" (ngSubmit)="addNewRessourceFTP(fffff)" novalidate>
+        <label for="configuration_name">Configuration name </label>
+        <input name="configuration_name" placeholder="configuration name.." ngModel required #configuration_name="ngModel">
+  
+        <label for="host">HOST </label>
+        <input name="host" placeholder="Host  Value.." ngModel required #host="ngModel">
+  
+        <label for="port">PORT </label>
+        <input name="port" placeholder="PORT value.." ngModel required #port="ngModel">
+  
+        <label for="username">username</label>
+        <input name="username" placeholder="user name.." ngModel required #username="ngModel">
+  
+        <label for="password">password</label>
+        <input name="password" placeholder="password.." ngModel required #password="ngModel">
+        <label for="timeout">timeout</label>
+        <input name="timeout" placeholder="timeout.." ngModel required #timeout="ngModel">
+        <button class="btn btn-info">Add</button>
+  
+      </form>
+    </div>
+    <div *ngIf="showdivfail" class="alert alert-danger">
+      please check your input
+    </div>
+    <div *ngIf="showdivsucc" class="alert alert-success">
+      <strong>Success!</strong> ressource Created With Success.
+    </div>
+  
+    <div *ngIf="addexistantJDBC" id="content">
+      <form #f_jdbc="ngForm" (ngSubmit)="closeexistantRessourceJDBC(f_jdbc)" novalidate>
+  
+        <label for="ptype"> JDBC Configuration name </label>
+        <select name="ptype" ngModel #ptype="ngModel">
+                <option value="" disabled selected>Select JDBC  configuration name </option>
+              <option *ngFor="let ressource of RessourcesArray" value="{{ressource}}">{{ressource}}</option>
+            </select>
+        <table>
+          <tr>
+            <td>
+              <button class="lil_btn" (click)="AddDetails(ressource,f_jdbc)">Details</button>
+              <button class="lil_btn" (click)="AddexistantJDBCRessource(ressource,f_jdbc)">ADD</button>
+              <button class="lil_btn">close </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div *ngIf="addexistantHTTP" id="content">
+      <form #f_http="ngForm" (ngSubmit)="closeexistantRessourceHTTP(f_http)" novalidate>
+  
+        <label for="ptype"> HTTP Configuration name </label>
+        <select name="ptype" ngModel #ptype="ngModel">
+                <option value="" disabled selected>Select HTTP configuration name </option>
+              <option *ngFor="let ressourceHTTP of RessourcesHTTPArray" value="{{ressourceHTTP}}">{{ressourceHTTP}}</option>
+            </select>
+        <table>
+          <tr>
+            <td>
+              <button class="lil_btn" (click)="AddDetails(ressourceHTTP,f_http)">Details</button>
+              <button class="lil_btn" (click)="AddexistantHTTPRessource(ressourceHTTP,f_http)">ADD</button>
+              <button class="lil_btn">close </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div *ngIf="addexistantEMS" id="content">
+      <form #f_ems="ngForm" (ngSubmit)="closeexistantRessourceEMS(f_ems)" novalidate>
+  
+        <label for="ptype"> EMS Configuration name </label>
+        <select name="ptype" ngModel #ptype="ngModel">
+                <option value="" disabled selected>Select EMS configuration name </option>
+              <option *ngFor="let ressourceEMS of RessourcesEMSArray" value="{{ressourceEMS}}">{{ressourceEMS}}</option>
+            </select>
+        <table>
+          <tr>
+            <td>
+  
+  
+              <button class="lil_btn" (click)="AddDetails(ressourceEMS ,f_ems)">Details</button>
+              <button class="lil_btn" (click)="AddexistantEMSRessource(ressourceEMS ,f_ems)">ADD</button>
+              <button class="lil_btn">close </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div *ngIf="addexistantFTP" id="content">
+      <form #f_ems="ngForm" (ngSubmit)="closeexistantRessourceFTP(f_ftp)" novalidate>
+  
+        <label for="ptype"> FTP Configuration name </label>
+        <select name="ptype" ngModel #ptype="ngModel">
+                <option value="" disabled selected>Select FTP configuration name </option>
+              <option *ngFor="let ressourceFTP of RessourcesFTPArray" value="{{ressourceFTP}}">{{ressourceFTP}}</option>
+            </select>
+        <table>
+          <tr>
+            <td>
+  
+  
+              <button class="lil_btn" (click)="AddDetails(ressourceFTP,f_ftp)">Details</button>
+              <button class="lil_btn" (click)="AddexistantFTPRessource(ressourceFTP,f_ftp)">ADD</button>
+              <button class="lil_btn">close </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div *ngIf="showDetails">
+      <form #f_detail="ngForm" (ngSubmit)="closeDetails(f_detail)" novalidate>
+        <label for="Details"> Details </label>
+        <table>
+          <tr>
+            <td>
+              <button class="lil_btn">close</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  
+  
+  
+  </div>
+  <!--
+  <div *ngIf="add">
+      <form #ff="ngForm" (ngSubmit)="addNew(f)" novalidate>
+          <label for="HOST">HOST </label>
+          <input name="HOST" placeholder="Host  Value.." ngModel required #HOST="ngModel">
+  
+            <label for="PORT">PORT/label>
+            <input name="PORT" placeholder="PORT value.." ngModel required #PORT="ngModel">
+  
+                <label for="SID">SID</label>
+                <input name="SID" placeholder="SID NAME.." ngModel required #SID="ngModel">
+              <button class="btn btn-info">Add</button>
+  
+      </form>
+  </div> -->

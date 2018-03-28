@@ -1,135 +1,140 @@
-<!--><ng-template ngbModalContainer></ng-template>
-
-<ng-template #modalContent let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
-    </div>
-    <div>
-      Event:
-      <pre>{{ modalData?.event | json }}</pre>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="close()">OK</button>
-  </div>
-</ng-template>
-
-<div class="card card-body">
-  <div class="d-flex flex-wrap justify-content-md-between mb-3 no-gutters">
-    <div class="col">
-      <div class="btn-group d-none d-lg-inline-flex">
-        <div
-          class="btn btn-secondary"
-          mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate">
-          Previous
-        </div>
-        <div
-          class="btn btn-secondary"
-          mwlCalendarToday
-          [(viewDate)]="viewDate">
-          Today
-        </div>
-        <div
-          class="btn btn-secondary"
-          mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate">
-          Next
-        </div>
+<div>
+    <div class="card-header">
+        List of Projects to invoke in <strong>  {{pname}}  </strong> 
       </div>
-
-      <div class="btn-group d-lg-none">
-        <div class="btn btn-secondary btn-icon-icon" mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate">
-          <i class="icon icon-arrows-left"></i>
-        </div>
-        <div class="btn btn-secondary btn-icon-icon" mwlCalendarToday
-          [(viewDate)]="viewDate">
-          <i class="icon icon-arrows-sign-down"></i>
-        </div>
-        <div class="btn btn-secondary btn-icon-icon" mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate">
-          <i class="icon icon-arrows-right"></i>
-        </div>
+<p></p>
+</div>
+<div *ngIf="CallsAddedFail">
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>Fail !</strong>  {{SelectedProcess}} Already exists in {{pname}}
+      </div></div>
+<div *ngIf="CallsAddedSucc" >
+    <div class="alert_suc">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>Success!</strong> Operation  <strong>{{SelectedProcess}} </strong> is added to <strong> {{pname}} </strong> successfully.
       </div>
     </div>
-    <div class="col text-center align-self-center d-none d-sm-block">
-      <h6 class="text-uppercase mb-0">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h6>
-    </div>
-    <div class="col text-right">
-      <div class="btn-group d-none d-lg-inline-flex">
-        <div class="btn btn-secondary"
-          (click)="view = 'month'"
-          [class.active]="view === 'month'">
-          Month
-        </div>
-        <div class="btn btn-secondary"
-          (click)="view = 'week'"
-          [class.active]="view === 'week'">
-          Week
-        </div>
-        <div class="btn btn-secondary"
-          (click)="view = 'day'"
-          [class.active]="view === 'day'">
-          Day
-        </div>
-      </div>
 
-      <div class="btn-group d-lg-none">
-        <div class="btn btn-secondary btn-icon-icon" (click)="view = 'month'"
-          [class.active]="view === 'month'">
-          <i class="icon icon-software-layout-4boxes"></i>
-        </div>
-        <div class="btn btn-secondary btn-icon-icon" (click)="view = 'week'"
-          [class.active]="view === 'week'">
-          <i class="icon icon-software-layout-4lines"></i>
-        </div>
-        <div class="btn btn-secondary btn-icon-icon" (click)="view = 'day'"
-          [class.active]="view === 'day'">
-          <i class="icon icon-software-layout-4columns"></i>
-        </div>
-      </div>
+        <div class="table table-responsive">
+          <table id="customers">
+            <thead>
+              <tr>
+                <th>
+                  Project Name
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Client
+                </th>
 
-    </div>
-  </div>
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view
-      *ngSwitchCase="'month'"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      [activeDayIsOpen]="activeDayIsOpen"
-      (dayClicked)="dayClicked($event.day)"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view
-      *ngSwitchCase="'week'"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view
-      *ngSwitchCase="'day'"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-day-view>
-  </div>
-</div><-->
+                <th>
+                    Creation Date
+                  </th>
+                  <th>
+                      Status
+                  </th>
+                  <th>
+                      Action
+                  </th>
+                  <th >
+                      Choose Operation
+                  </th>
+                  <th>
+                      Call Synchrone
+                  </th>
+                  <th>
+                      Call Asynchrone
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+
+                  <tr *ngFor="let Project of dataprojects?.resultSet.record ; let i=index">
+                      <td>
+                        {{Project.projectName}}
+
+                      </td>
+                      <td>
+                          {{Project.templateType}}
+
+                        </td>
+                        <td>
+                            {{Project.clientName}}
+
+                         </td>
+                        <td>
+                            {{Project.projectCrDate}}
+
+                        </td>
+                        <td>
+                            {{Project.projectStatus}}
+
+                        </td>
+
+                   <td>
+
+                     <button  type="button" (click)="invoquer(Project.projectName,Project.clientName,Project.templateType)" >Show List Of Operation</button>
+                     <!-- <button  type="button" (click)="OnModify(Project.projectName)" class="lil_btn">Modify</button>
+
+                     <!-->
+                     <!-- <button  type="button" (click)="Download(Project.projectName)" class="lil_btn">Download</button>
+                     <button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button>
+                     <button  type="button" (click)="onOld(Project.projectName)" class="lil_btn">Add</button>
+                     <button  type="button" (click)="Checkout(Project.projectName, Project.clientName)" class="lil_btn">Checkout</button> -->
+
+                    </td>
+
+                    <td>
+
+                      <select name="oname" ngModel #oname="ngModel">
+                          <option value="" disabled selected>Select your Operation</option>
+                        <option name="op" value="{{Operation}}" *ngFor="let Operation of dataOperation?.root.Operation.nom">  {{Operation}}</option>
+                      </select>
+
+                    </td>
+                    <td>
+                         <button  type="button" (click)="CreateInvocationSynchone(InvSynch,pname,pclient,ptype,Project.projectName,Project.clientName,Project.templateType,oname.value)" >Call Synchrone</button>
+                    </td>
+                    <td>
+                         <button  type="button" (click)="CreateInvocationAsynchrone(InvAsynch,pname,pclient,ptype,Project.projectName,Project.clientName,Project.templateType,oname.value)" >Call Asynchrone</button>
+                    </td>
+                  </tr>
+
+                <!-- <tr>
+                <button  type="button" (click)="onNew()" class="lil_btn">Generate New Project</button>
+                 <button class="lil_btn" type="button" (click)="OnUpload()">Upload New Project</button>
+                 <button class="lil_btn" type="button" (click)="onNew()">Checkout New Project</button>
+                </tr> -->
+
+            </tbody>
+
+          </table>
+
+          <!-- <div *ngIf="ShowOperation"> -->
+          <!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)" >
+
+              <label for="oname">  Operation Name</label>
+              <select name="oname" ngModel #oname="ngModel"  >
+                  <option disabled selected>Select your Operation</option>
+                <option [ngValue]="Operation" *ngFor="let Operation of dataOperation?.root.Operation.nom">  {{Operation}}</option>
+              </select>
+
+
+            <button>Submit</button>
+          </form> -->
+            <!-- <select>
+            <option *ngFor="let Operation of dataOperation?.root.Operation.nom">{{Operation}}</option>
+            </select> -->
+        <!-- </div> -->
+        </div>
+
+
+
+
+
+<div >
+
+</div>

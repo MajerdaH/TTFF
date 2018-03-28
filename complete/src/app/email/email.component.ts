@@ -26,6 +26,8 @@ export class EmailComponent implements OnInit {
 
   public sub: any;
   public pname: any;
+  public addLogdata: any;
+  public urldata: any;
   data: any;
   public OperationsNotAdded: boolean;
   public OperationsAdded: boolean;
@@ -34,7 +36,8 @@ export class EmailComponent implements OnInit {
   public jsonOperations: any;
   public jsonSelectedOperations: any;
   public operation: boolean;
-  public uploadwsdl: boolean;
+  public uploadwsdlfile: boolean;
+  public uploadwsdlurl: boolean;
   public displayOperations;
   public projname: string;
   public modify: boolean;
@@ -45,11 +48,15 @@ export class EmailComponent implements OnInit {
   public dataOps: any;
   public addLog: boolean;
   public successupload: boolean;
+  public addCallSucc: boolean;
+  public addCallFail: boolean;
   public displayOperationsList: boolean;
   public SelectedOperations: Array<string> = [];
   public FinalOperations: Array<OperationCall> = [];
   WsdLOpsArray: Array<string> = [];
   elm: OperationCall = {};
+  pclient: string;
+  ptype: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,7 +69,8 @@ export class EmailComponent implements OnInit {
     ngOnInit(): void {
      // throw new Error('Method not implemented.');
       this.serviceUrl = '192.168.110.224';
-      this.uploadwsdl = false;
+      this.uploadwsdlfile = false;
+      this.uploadwsdlurl = false;
       this.displayOperations = false;
       this.modify = true;
       this.sub = this.route
@@ -71,6 +79,8 @@ export class EmailComponent implements OnInit {
           console.log(params);
           // Defaults to 0 if no query param provided.
           this.pname = params['project'];
+          this.pclient = params['client'];
+          this.ptype = params['type'];
           console.log(this.pname);
         });
 
@@ -124,16 +134,18 @@ export class EmailComponent implements OnInit {
         this.router.navigate(['./docs'], { queryParams: { project: this.pname } });
       }
       AddJMS() {
-        this.router.navigate(['./calendar'], { queryParams: { project: this.pname } });
+        this.router.navigate(['./calendar'], { queryParams: { project: this.pname, type: this.ptype, client: this.pclient } });
       }
 
       UploadWSDL() {
-        this.uploadwsdl = true;
+        this.uploadwsdlfile = !this.uploadwsdlfile;
+        this.uploadwsdlurl = !this.uploadwsdlurl;
       }
 
 
     fileChange(event) {
-      let input = event.target;
+      this.uploadwsdlurl = false;
+    let input = event.target;
       for (var index = 0; index < input.files.length; index++) {
           let reader = new FileReader();
           reader.onload = () => {
@@ -146,13 +158,35 @@ export class EmailComponent implements OnInit {
          // console.log(event.target.);
       }
   }
+  LoadFromUrl(f: NgForm){
+    console.log(f.value.wsdlurl);
+    this.uploadwsdlfile = false;
+    this.http.get('http://' + this.serviceUrl + ':8094/WsdlFromUrl?WSDLURL=' + f.value.wsdlurl).subscribe(data => {
+          this.urldata = data;
+          this.wsdlfile = this.urldata.FromUrlOutput;
+          this.jsonWsdl = this.wsdlfile;
+        console.log(this.wsdlfile);
+     });
+
+  }
+  /*CallWsdl() {
+
+  console.log(f.valid);
+       this.http.get('http://' + this.serviceUrl + ':8094/WsdlFromUrl?WSDLURL=' + f.value.wsdlurl).subscribe(data => {
+     //    console.log(data);
+         this.urldata = data;
+         this.wsdlfile = this.urldata.FromUrlOutput;
+         this.jsonWsdl=this.wsdlfile;
+       console.log(this.wsdlfile);
+      
+    });
+
+      this.CallWsdl();
+  }*/
+
     onSubmitUpload(f: NgForm) {
-     // console.log(f.value);
-      //console.log(this.wsdlfile);
-      this.jsonWsdl = this.wsdlfile;
-      console.log(this.jsonWsdl);
       // tslint:disable-next-line:max-line-length
-      this.http.post('http://' +  this.serviceUrl + ':8091/CreateWsdl?projectName=' + this.pname + '&WsdlName=WSDL', this.jsonWsdl).subscribe(data => {
+      this.http.post('http://' +  this.serviceUrl + ':8091/CreateWsdl?projectName=' + this.pname + '&WsdlName=WSDL', this.wsdlfile).subscribe(data => {
         console.log(data);
         this.dataOps = data ;
         console.log(this.dataOps.Operations.name);
@@ -163,7 +197,8 @@ export class EmailComponent implements OnInit {
 
       });
       this.successupload = true;
-      this.uploadwsdl = false;
+      this.uploadwsdlurl = false;
+      this.uploadwsdlfile = false;
       this.showActions = true;
      // this.displayOperations = false;
      this.modify = false;
@@ -244,13 +279,19 @@ export class EmailComponent implements OnInit {
     }
 
       SubmitOperationsToService() {
+        this.addLog = false;
+      //  this.addOpsStatus = true
 
       this.jsonSelectedOperations = '{"SelectedOperations":{"List":' + JSON.stringify(this.FinalOperations) + '}}';
 console.log(this.jsonSelectedOperations);
 
     // tslint:disable-next-line:max-line-length
-    this.http.post('http://192.168.110.224:8092/CreateOperation?ProjectName=' + this.pname, this.jsonSelectedOperations).subscribe(data => {
-      // console.log(data);
+    this.http.post('http://192.168.110.224:8092/CreateCallOperation?ProjectName=' + this.pname, this.jsonSelectedOperations).subscribe(data => {
+       console.log(data);
+       this.addLogdata = data;
+       if( this.addLogdata.Response === "Success" ){this.addCallSucc = true; }
+       // tslint:disable-next-line:one-line
+       else {this.addCallFail = true; }
       });
     }
     }

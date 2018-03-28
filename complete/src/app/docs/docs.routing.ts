@@ -6,6 +6,7 @@ export const DocsRoutes: Routes = [{
   path: '',
   component: DocsComponent,
   data: {
-    heading: 'Add Ressources'
+    heading: 'Add Ressources',
+    removeFooter: true
   }
 }];

@@ -39,7 +39,7 @@ const MENUITEMS = [
     type: 'link',
     icon: 'basic-paperplane'
   },
-  /*{
+  {
     state: 'components',
     name: 'COMPONENTS',
     type: 'sub',
@@ -254,7 +254,7 @@ const MENUITEMS = [
         name: 'SORTING'
       },
     ]
-  }/*,
+  },
   {
     state: 'charts',
     name: 'CHARTS',
@@ -426,7 +426,7 @@ const MENUITEMS = [
     name: 'DOCS',
     type: 'link',
     icon: 'basic-sheet-txt'
-  }*/
+  }
 ];
 
 @Injectable()

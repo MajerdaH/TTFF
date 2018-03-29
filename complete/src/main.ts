@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { ProjectFilterPipePipe } from './app/project-filter-pipe.pipe';
 
 if (environment.production) {
   enableProdMode();

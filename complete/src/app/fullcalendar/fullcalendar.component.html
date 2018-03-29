@@ -17,7 +17,10 @@
     </div>
 
         <div class="table table-responsive">
+            <input type="text" id="str" [(ngModel)]="str" name="str" placeholder="Search for names..">
+           
           <table id="customers">
+            
             <thead>
               <tr>
                 <th>
@@ -52,7 +55,7 @@
             </thead>
             <tbody>
 
-                  <tr *ngFor="let Project of dataprojects?.resultSet.record ; let i=index">
+                  <tr *ngFor="let Project of ProjectsArray | jmspipe:str || ''; let i=index"></tr>
                       <td>
                         {{Project.projectName}}
 

@@ -65,16 +65,7 @@
       <strong>Success!</strong> Operations Added With Success.
       </div>
     </div>
-
-    <!--><div *ngIf="uploadwsdl"  >
-      <form #formCtrl="ngForm">
-         <input  type="text" autofocus="autofocus" [(ngModel)]="wsdlurl" name="wsdlurl" placeholder="Enter WSDL URL"/> 
-         OR Upload File <br>
-        <input type="file" [(ngModel)]="wsdlfile" name="wsdlfile">
-        <button  type="button" (click)="onSubmitUpload()" [disabled]="!formCtrl.form.valid" class="lil_btn" >Submit</button>
-      </form>
-    </div><-->
-
+    
     <div *ngIf="uploadwsdlurl">
         <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
             <label for="wsdlurl">  Enter WSDL URL</label>
@@ -91,20 +82,6 @@
           
           <button class="lil_btn" (click)="onSubmitUpload(f)">Submit</button>
         </div>
-
-      <!-->  <div *ngIf="displayOperations">
-            <form #f="ngForm" (ngSubmit)="onSubmitUpload(f)" novalidate>
-                <label for="wsdlurl">  Enter WSDL URL</label>
-                <input  name="wsdlurl" placeholder="WSDl URL.." ngModel #wsdlurl="ngModel" autofocus="autofocus">
-    
-            
-                <label for="wsdlfile">  OR Upload File</label>
-                <input  name="wsdlurl" type="file" ngModel #wsdlfile="ngModel" (change)="fileChange($event)" placeholder="Upload file" accept="text/plain" id="avatar">
-                
-              
-              <button class="lil_btn">Submit</button>
-            </form>
-            </div><-->
 
             <div *ngIf="successupload" >
                 <div class="alert_suc">

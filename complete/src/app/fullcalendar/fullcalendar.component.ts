@@ -80,20 +80,15 @@ export class FullcalendarComponent {
 }
 
 
-GetProjects(username: string){
-  console.log(username);
-  this.http.get('http://' + this.serviceUrl + ':8084/GetProject?Username=' + username).subscribe(data => {
+GetProjects(username: string) {
+  this.http.get('http://192.168.110.224:8084/GetProject?Username=' + username).subscribe(data => {
     this.dataprojects = data;
-    // console.log (this.dataprojects.resultSet.record);
-    // console.log (this.dataprojects.resultSet.record.length);
-  //
-  // for (let i = 0; i < this.dataprojects.resultSet.record.length; i++) {
-  //   this.ProjectsArray.push(this.dataprojects.resultSet.record[i]);
-  //   console.log(this.dataprojects.resultSet.record[i]);
-  // }
-  });
-  // this.ProjectsArray.push(elt);
+    for (const elt of this.dataprojects.resultSet.record) {
+      this.ProjectsArray.push(elt);
+    }
    // console.log(this.ProjectsArray);
+  });
+   console.log(this.ProjectsArray);
 
 }
 

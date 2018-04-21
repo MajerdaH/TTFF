@@ -1,27 +1,26 @@
-
-  <div *ngIf="showdivsucc" >
-      <div class="alert_suc">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-        <strong>Success!</strong> Project Created With Success.
-        </div>
-      </div>
-      <div *ngIf="showdivfail" >
-          <div class="alert">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            This Project Already Exists.
-            </div>
-          </div>
-<div class="card" >
+<div *ngIf="showdivsucc">
+  <div class="alert_suc">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Success!</strong> Project Created With Success.
+  </div>
+</div>
+<div *ngIf="showdivfail">
+  <div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> This Project Already Exists.
+  </div>
+</div>
+<div class="card">
   <div class="card" *ngIf="basic">
-      <div class="card-header">
-       Projects List
-      </div>
+    <div class="card-header">
+      Projects List
+    </div>
 
-      <div class="card-body"  >
-         <!--> <input type="Search" id="myinput" name="myinput" placeholder="Search for names.." title="Type in a name"><-->
+    <div class="card-body">
+      <!--><input type="Search" id="myinput" name="myinput" placeholder="Search for names.." title="Type in a name">
+      <-->
         <div class="table-responsive">
-            <input type="text" id="str" [(ngModel)]="str" name="str" placeholder="Search for names..">
-            
+          <input type="text" id="str" [(ngModel)]="str" name="str" placeholder="Search for names..">
+
           <table id="customers">
             <thead>
               <tr>
@@ -34,131 +33,12 @@
                 <th>
                   Client
                 </th>
-              
+
                 <th>
-                    Creation Date
-                  </th>
-                  <th>
-                      Status  
-                  </th>
-                  <th>
-                      Action
-                  </th>
-              </tr>
-            </thead>
-            <tbody>
-                
-                  <tr *ngFor="let Project of ProjectsArray | projectfilter: str || '' ; let i=index">
-                      <td>
-                        {{Project.projectName}}
-                    
-                      </td>
-                      <td>
-                          {{Project.templateType}}
-                      
-                        </td>
-                        <td>
-                            {{Project.clientName}}
-                        
-                         </td>
-                        <td>
-                            {{Project.projectCrDate}}
-                          
-                        </td>
-                        <td>
-                            {{Project.projectStatus}}
-                          
-                        </td>
-                   <td>
-                     
-                     <button  type="button" (click)="addFieldValue()" class="lil_btn">Update</button>
-                     <button  type="button" (click)="OnModify(Project.projectName, Project.templateType, Project.clientName )" class="lil_btn">Modify</button>
-
-                   </td>
-                  </tr>
-                <tr>
-                <button  type="button" (click)="onNew()" class="lil_btn">Generate New Project</button>
-                 <button class="lil_btn" type="button" (click)="OnUpload()">Upload New Project</button> 
-               <!-->  <button class="lil_btn" type="button" (click)="onNew()">Checkout New Project</button><-->
-                </tr>
-              
-            </tbody>
-           
-          </table>
-        </div>
-      </div>
-    </div>
-
-<div *ngIf="addnew">
-    <div class="card-header">
-     <strong>  Generate New Project</strong>
-       </div>
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <label for="pname">  Project Name</label>
-    <input  name="pname" placeholder="Project Name.." ngModel required #pname="ngModel" autofocus="autofocus">
-
-    <label for="cname">  Client Name</label>
-    <select name="cname" ngModel #cname="ngModel" (change)="onSelect($event.target.value)">
-        <option value="" disabled selected>Select your Client</option>
-      <option value="{{Client}}" *ngFor="let Client of ClientsArray">  {{Client}}</option>
-    </select>
-
-    <label for="ptype">  Project Type</label>
-    <select name="ptype" ngModel #pname="ngModel">
-        <option value="" disabled selected>Select Template</option>
-      <option *ngFor="let Template of TemplatesArray" value="{{Template}}">{{Template}}</option>
-    </select>
-  
-  <button>Submit</button>
-</form>
-</div>
-<div *ngIf="modify" class="card card-body mb-0" >
-  <div class="card-header">
-    <strong>  {{ProjectName}}  </strong> 
-  </div>
-   <button  type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button><button  type="button" (click)="addFieldValue()" class="lil_btn">Delete</button><button  type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
-  </div>
-
-<div *ngIf="upload">
-    <form #f="ngForm" (ngSubmit)="OnUpload(f)" novalidate>
-        <label for="pname">Workspace </label>
-        <!--  <input name="pname" placeholder="Project Name.." ngModel required #pname="ngModel">-->
-        
-          <select id="pname" name="pname"  [(ngModel)]="selectedvalue" required #pname="ngModel" >
-            <option *ngFor="let pro of Projects" [value]="pro" selected>{{pro}}</option>
-          </select>
-        
-          <label for="path">Path Project</label>
-          <input name="path" placeholder="Path from upload.." ngModel required #path="ngModel">
-        
-            <button class="btn btn-info">Upload</button>
-        
-          </form>
-      
-  
-    </div>
-
-<div *ngIf="OperationsNotAdded">
-    <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-  Some Operations Already Exist
-  </div>
-
-</div>
-<div *ngIf="OperationsAdded">
-  <div class="alert_suc">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-    <strong>Success!</strong> Operations Added With Success.
-  </div></div>
-
-      <div *ngIf="operation"  id="content">
-      Add Operations to <strong>{{projname}}</strong>
-      <div class="table-responsive" >
-          <table id="customers">
-            <thead>
-              <tr>
+                  Creation Date
+                </th>
                 <th>
-                  Operation Name
+                  Status
                 </th>
                 <th>
                   Action
@@ -166,31 +46,158 @@
               </tr>
             </thead>
             <tbody>
-             <tr *ngFor="let Operation of OperationsArray; let i=index">
-               <td>
-                {{Operation}}
-               </td>
-               <td>
-                 <button   type="button" (click)="deleteFieldValue(i)" class="lil_btn">Delete</button>
-               </td>
-            </tr>
-            <tr>
-              <td>
-                <input  type="text" autofocus="autofocus" [(ngModel)]="newAttribute" name="newAttribute" />
-             </td>
-             <td>
-                <button  type="button" (click)="addFieldValue()" class="lil_btn">Add</button>
-             </td>
-            </tr>
-                  
+
+              <tr *ngFor="let Project of ProjectsArray | projectfilter: str || '' ; let i=index">
+                <td>
+                  {{Project.projectName}}
+
+                </td>
+                <td>
+                  {{Project.templateType}}
+
+                </td>
+                <td>
+                  {{Project.clientName}}
+
+                </td>
+                <td>
+                  {{Project.projectCrDate}}
+
+                </td>
+                <td>
+                  {{Project.projectStatus}}
+
+                </td>
+                <td>
+
+                  <button type="button" (click)="addFieldValue()" class="lil_btn">Update</button>
+                  <button type="button" (click)="OnModify(Project.projectName, Project.templateType, Project.clientName )" class="lil_btn">Modify</button>
+                  <button type="button" class="lil_btn" (click)="Download(pname)">Download</button>
+                </td>
+              </tr>
+              <tr>
+                <button type="button" (click)="onNew()" class="lil_btn">Generate New Project</button>
+                <button class="lil_btn" type="button" (click)="OnUpload()">Upload New Project</button>
+                <!--><button class="lil_btn" type="button" (click)="onNew()">Checkout New Project</button>
+                <-->
+              </tr>
+
             </tbody>
-            <button  type="button" (click)="onSubmitOp()">Submit</button>
+
           </table>
-         
         </div>
-      
     </div>
   </div>
-        
 
+  <div *ngIf="addnew">
+    <div class="card-header">
+      <strong>  Generate New Project</strong>
+    </div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <label for="pname">  Project Name</label>
+      <input name="pname" placeholder="Project Name.." ngModel required #pname="ngModel" autofocus="autofocus">
 
+      <label for="cname">  Client Name</label>
+      <select name="cname" ngModel #cname="ngModel" (change)="onSelect($event.target.value)">
+        <option value="" disabled selected>Select your Client</option>
+      <option value="{{Client}}" *ngFor="let Client of ClientsArray">  {{Client}}</option>
+    </select>
+
+      <label for="ptype">  Project Type</label>
+      <select name="ptype" ngModel #pname="ngModel">
+        <option value="" disabled selected>Select Template</option>
+      <option *ngFor="let Template of TemplatesArray" value="{{Template}}">{{Template}}</option>
+    </select>
+
+      <button>Submit</button>
+    </form>
+  </div>
+  <div *ngIf="modify" class="card card-body mb-0">
+    <div class="card-header">
+      <strong>  {{ProjectName}}  </strong>
+    </div>
+    <button type="button" (click)="Download(ProjectName)" class="lil_btn">Download</button>
+    <button type="button" (click)="addFieldValue()" class="lil_btn">Delete</button>
+    <button type="button" (click)="onOld(ProjectName)" class="lil_btn">Add +</button>
+  </div>
+
+  <div *ngIf="OperationsNotAdded">
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> Some Operations Already Exist
+    </div>
+
+  </div>
+  <div *ngIf="OperationsAdded">
+    <div class="alert_suc">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <strong>Success!</strong> Operations Added With Success.
+    </div>
+  </div>
+
+  <div *ngIf="operation" id="content">
+    Add Operations to <strong>{{projname}}</strong>
+    <div class="table-responsive">
+      <table id="customers">
+        <thead>
+          <tr>
+            <th>
+              Operation Name
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let Operation of OperationsArray; let i=index">
+            <td>
+              {{Operation}}
+            </td>
+            <td>
+              <button type="button" (click)="deleteFieldValue(i)" class="lil_btn">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" autofocus="autofocus" [(ngModel)]="newAttribute" name="newAttribute" />
+            </td>
+            <td>
+              <button type="button" (click)="addFieldValue()" class="lil_btn">Add</button>
+            </td>
+          </tr>
+
+        </tbody>
+        <button type="button" (click)="onSubmitOp()">Submit</button>
+      </table>
+
+    </div>
+
+  </div>
+  <div *ngIf="upload">
+    <table colspan="2">
+      <tr>
+        <td>
+          <form #f="ngForm" (ngSubmit)="uploadFolder(f)">
+            <label for="pname">select your Workspace </label>
+            <select id="pname" name="pname" [(ngModel)]="selectedvalue" required #pname="ngModel">
+            <option *ngFor="let pro of Projects" [value]="pro" selected>{{pro}}</option>
+          </select>
+            <label for="f_path">choose Project</label>
+            <input id="file" type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx,.zip,.rar">
+            <button class="btn btn-info" type="submit" (click)="OnUploadProject()"> Upload</button>
+          </form>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="showdivfail" class="alert alert-danger">
+    project name already exists , try another name it will be erased !
+  </div>
+  <div *ngIf="uploadSuccess">
+    <div class="alert_suc">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <strong>Success! {{pname}}</strong> uploaded With Success .
+    </div>
+  </div>
+</div>

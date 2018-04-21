@@ -1,77 +1,99 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import * as shape from 'd3-shape';
-import { colorSets  } from '@swimlane/ngx-charts/release/utils/color-sets';
+import { colorSets } from '@swimlane/ngx-charts/release/utils/color-sets';
 import {
   single,
   generateData
 } from '../shared/chartData';
+import { HttpClient } from '@angular/common/http';
+import { Http, Response } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, Validators, ControlContainer, FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 
-export class DashboardComponent {
-  single: any[];
-  graph: {
-    links: any[],
-    nodes: any[]
-  };
-  dateData: any[];
-  // options
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = false;
-  showXAxisLabel = false;
-  tooltipDisabled = false;
-  xAxisLabel = 'Country';
-  showYAxisLabel = false;
-  yAxisLabel = 'GDP Per Capita';
-  showGridLines = true;
-  roundDomains = false;
-  colorScheme = {
-    domain: [
-    '#0099cc', '#2ECC71', '#4cc3d9', '#ffc65d', '#d96557', '#ba68c8'
-    ]
-  };
-  schemeType = 'ordinal';
-  // line interpolation
-  curve = shape.curveLinear;
-  // line, area
-  timeline = false;
-  // margin
-  margin = false;
-  marginTop = 40;
-  marginRight = 40;
-  marginBottom = 40;
-  marginLeft = 40;
-  // gauge
-  gaugeMin = 0;
-  gaugeMax = 50;
-  gaugeLargeSegments = 10;
-  gaugeSmallSegments = 5;
-  gaugeTextValue = '';
-  gaugeUnits = 'alerts';
-  gaugeAngleSpan = 240;
-  gaugeStartAngle = -120;
-  gaugeShowAxis = true;
-  gaugeValue = 50; // linear gauge value
-  gaugePreviousValue = 70;
+export class DashboardComponent implements OnInit {
+  public sub: any;
+  public data: any;
+  public basic: boolean;
+  public pname: any;
+  public dataprojects: any;
+  public upload: boolean;
+  public serviceUrl: string;
+  public uploadPaths = [];
+  public selected: string;
+  private ProjectsArray: Array<any> = [];
+  public ProjectsUploadArray: Array<any> = [];
+  public ProjectName: any;
+  public showdivsucc: boolean;
+  public showdivfail: boolean;
+  //  address :string;
+  public Projects = ['WorkspaceUsers', 'WorkspaceShared'];
+  filesToUpload: Array<File> = [];
+  // relativePath :string;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router, private http: HttpClient) { }
 
-  constructor() {
-    Object.assign(this, {
-      single
+  ngOnInit() {
+    this.serviceUrl = '192.168.110.186';
+    this.basic = true;
+    this.upload = false;
+    this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+        console.log(params);
+        // Defaults to 0 if no query param provided.
+        this.pname = params['project'];
+        console.log(this.pname);
+      });
+    this.GetListProjectUpload('userX');
+  }
+
+  GetListProjectUpload(username: string) {
+    this.http.get('http://' + this.serviceUrl + ':9935/GetListProjectUpload?project_upload_owner=' + username).subscribe(data => {
+      this.dataprojects = data;
+      for (const elt of this.dataprojects.resultSet.record) {
+        this.ProjectsUploadArray.push(elt);
+      }
+      console.log(this.ProjectsUploadArray);
     });
-    this.dateData = generateData(5, false);
+    /*  this.http.get('http://' + this.serviceUrl + ':8084/GetProject?Username=' + username).subscribe(data => {
+        this.dataprojects = data;
+        for (const elt of this.dataprojects.resultSet.record) {
+          this.ProjectsArray.push(elt);
+        }
+        console.log(this.ProjectsArray);
+      });*/
+  }
+  OnUpload(name2: string) {
+    //this.router.navigate(['./dashboard'], { queryParams: { project: name2 } });
+    this.upload = !this.upload;
+    this.showdivfail = false;
+    //this.operation = false;
+  }
+  UploadFolder(f: NgForm) {
+    console.log(f.value);
+    console.log(f.value.pname);
+    console.log(f.value.path);
+
+    var string = f.value.path;
+    var nomprojet = string.substring(string.lastIndexOf("/") + 1, string.length);
+    console.log(nomprojet);
+    this.http.get("http://192.168.110.205:9999/upload?project_name=" + f.value.pname + "&path_from=" + f.value.path)
+      .subscribe
+      (data => {
+        console.log(data);
+
+      });
   }
 
-  select(data) {
-    console.log('Item clicked', data);
-  }
 
-  onLegendLabelClick(entry) {
-    console.log('Legend clicked', entry);
-  }
+
 }

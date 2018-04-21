@@ -17,6 +17,9 @@ import {
 })
 export class DocsComponent implements OnInit {
   public data: any;
+  public ressource_type: any;
+  public ressource_name: any;
+  public ressource_value: any;
   public projname: string;
   public showdivsucc: boolean;
   public showdivfail: boolean;
@@ -37,10 +40,12 @@ export class DocsComponent implements OnInit {
   public selectedressource: string = '';
   public selectedconf: string = '';
   public dataressources: any;
+  public datadetails: any;
   public dataressources2: any;
   public dataressources3: any;
   public dataressources4: any;
   public type: string;
+  public DetailsArray: Array<any> = [];
   public RessourcesArray: Array<any> = [];
   public RessourcesHTTPArray: Array<any> = [];
   public RessourcesEMSArray: Array<any> = [];
@@ -69,7 +74,7 @@ export class DocsComponent implements OnInit {
     this.addFTP = false;
     this.addEMS = false;
 
-    this.serviceUrl = '192.168.110.224';
+    this.serviceUrl = '192.168.110.186';
     this.sub = this.route
       .queryParams
       .subscribe(params => {
@@ -81,16 +86,19 @@ export class DocsComponent implements OnInit {
 
   }
 
-  radioChangeHandler(event: any) {
-    this.selectedressource = event.target.value;
+  /*  radioChangeHandler(event: any) {
+      this.selectedressource = event.target.value;
 
-  }
-  radioChangeHandler2(event: any) {
-    this.selectedconf = event.target.value;
-  }
+    }
+    radioChangeHandler2(event: any) {
+      this.selectedconf = event.target.value;
+    }
+    */
   onFormSubmit(f: NgForm) {
 
     if ((f.value.oneressource == 'JDBC') && (f.value.oneconfiguration == 'Nouvelle configuration')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = true;
       this.addHTTP = false;
@@ -102,6 +110,8 @@ export class DocsComponent implements OnInit {
       this.addexistantHTTP = false;
     }
     else if ((f.value.oneressource == 'HTTP') && (f.value.oneconfiguration == 'Nouvelle configuration')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addFTP = false;
@@ -113,6 +123,8 @@ export class DocsComponent implements OnInit {
       this.addexistantHTTP = false;
     }
     else if ((f.value.oneressource == 'EMS') && (f.value.oneconfiguration == 'Nouvelle configuration')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addHTTP = false;
@@ -125,6 +137,8 @@ export class DocsComponent implements OnInit {
 
     }
     else if ((f.value.oneressource == 'FTP') && (f.value.oneconfiguration == 'Nouvelle configuration')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addHTTP = false;
@@ -137,6 +151,8 @@ export class DocsComponent implements OnInit {
 
     }
     else if ((f.value.oneconfiguration == 'configuration existante') && (f.value.oneressource == 'JDBC')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addHTTP = false;
@@ -151,6 +167,8 @@ export class DocsComponent implements OnInit {
       this.GetRessourcesJDBC(this.type);
     }
     else if ((f.value.oneconfiguration == 'configuration existante') && (f.value.oneressource == 'HTTP')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addHTTP = false;
@@ -165,6 +183,8 @@ export class DocsComponent implements OnInit {
       this.GetRessourcesHTTP(this.type);
     }
     else if ((f.value.oneconfiguration == 'configuration existante') && (f.value.oneressource == 'EMS')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addHTTP = false;
@@ -179,6 +199,8 @@ export class DocsComponent implements OnInit {
       this.GetRessourcesEMS(this.type);
     }
     else if ((f.value.oneconfiguration == 'configuration existante') && (f.value.oneressource == 'FTP')) {
+      this.showdivsucc = false;
+      this.showdivfail = false;
       this.basic = true;
       this.addJDBC = false;
       this.addHTTP = false;
@@ -204,7 +226,7 @@ export class DocsComponent implements OnInit {
     console.log(ff.value.host);
     console.log(ff.value.sid);
     this.http.get('http://' + this.serviceUrl + ':9904/addJDBC?HOST=' + ff.value.host + '&PORT=' + ff.value.port + '&SID=' + ff.value.sid
-      + '&Username=' + ff.value.Username + '&Password=' + ff.value.password + '&MaxConnections=' + ff.value.MaxConnections + '&Timeout=' + ff.value.timeout + '&project_name=' + this.pname + '&config_name=' + ff.value.configuration_name)
+      + '&Username=' + ff.value.Username + '&Password=' + ff.value.password + '&MaxConnections=' + ff.value.MaxConnections + '&Timeout=' + ff.value.timeout + '&project_name' + this.pname + '&config_name=' + ff.value.configuration_name)
       .subscribe
       (data => {
 
@@ -326,28 +348,14 @@ export class DocsComponent implements OnInit {
       });
 
   }
-  closeexistantRessourceJDBC(f_jdbc: NgForm) {
-
-    this.addexistantJDBC = false;
-    this.basic = true;
-
-  }
-  closeexistantRessourceFTP(f_ftp: NgForm) {
-    this.addexistantFTP = false;
-    this.basic = true;
-  }
-  closeexistantRessourceEMS(f_ems: NgForm) {
-    this.addexistantEMS = false;
-    this.basic = true;
-  }
-  closeexistantRessourceHTTP(f_http: NgForm) {
-    this.addexistantHTTP = false;
-    this.basic = true;
-  }
   closeDetails(f_detail: NgForm) {
+    //this.addexistantEMS = true;
+    //  this.addexistantFTP = true;
+    //this.addexistantJDBC = true;
+    //  this.addexistantHTTP = true;
     this.showDetails = false;
     this.basic = true;
-    this.addexistantJDBC = true;
+
   }
 
   AddexistantJDBCRessource(name_config: string, f_jdbc: NgForm) {
@@ -444,10 +452,70 @@ export class DocsComponent implements OnInit {
       });
   }
 
-  AddDetails(config_name: string, f_jdbc: NgForm) {
-
+  AddDetailsJDBC(config_name: string, f_jdbc: NgForm) {
+    this.addexistantJDBC = true;
+    this.addexistantHTTP = false;
+    this.addexistantEMS = false;
+    this.addexistantFTP = false;
+    config_name = f_jdbc.value.ptype;
+    this.getDetails(config_name);
     this.showDetails = !this.showDetails;
     this.showdivfail = false;
+
+
+  }
+
+  AddDetailsHTTP(config_name: string, f_http: NgForm) {
+
+    this.addexistantJDBC = false;
+    this.addexistantHTTP = true;
+    this.addexistantEMS = false;
+    this.addexistantFTP = false;
+    config_name = f_http.value.ptype;
+    this.getDetails(config_name);
+    this.showDetails = !this.showDetails;
+    this.showdivfail = false;
+
+  }
+  AddDetailsEMS(config_name: string, f_ems: NgForm) {
+    this.addexistantJDBC = false;
+    this.addexistantHTTP = false;
+    this.addexistantEMS = true;
+    this.addexistantFTP = false;
+    config_name = f_ems.value.ptype;
+    this.getDetails(config_name);
+    this.showDetails = !this.showDetails;
+    this.showdivfail = false;
+
+
+  }
+  AddDetailsFTP(config_name: string, f_ftp: NgForm) {
+    this.addexistantJDBC = false;
+    this.addexistantHTTP = false;
+    this.addexistantEMS = false;
+    this.addexistantFTP = true;
+    config_name = f_ftp.value.ptype;
+    this.getDetails(config_name);
+    this.showDetails = !this.showDetails;
+    this.showdivfail = false;
+
+
+  }
+  getDetails(config_name: string) {
+    console.log('show:' + config_name);
+    this.http.get('http://' + this.serviceUrl + ':9914/addDetails?config_name=' + config_name).subscribe(data => {
+      this.datadetails = data;
+      for (const el1 of this.DetailsArray) {
+        this.DetailsArray.splice(el1);
+      }
+      for (const elt of this.datadetails.resultset.record) {
+
+        this.DetailsArray.push(elt);
+      }
+
+
+      console.log(this.DetailsArray);
+    });
 
   }
   OnAddExistantJDBC() {
@@ -482,6 +550,9 @@ export class DocsComponent implements OnInit {
 
     this.http.get('http://' + this.serviceUrl + ':9920/getRessources?ressource_type=' + ressource_type).subscribe(data => {
       this.dataressources = data;
+      for (const el1 of this.RessourcesArray) {
+        this.RessourcesArray.splice(el1);
+      }
       for (const elt of this.dataressources.ressources.ressourceconfigname) {
         this.RessourcesArray.push(elt);
       }
@@ -492,6 +563,9 @@ export class DocsComponent implements OnInit {
 
     this.http.get('http://' + this.serviceUrl + ':9920/getRessources?ressource_type=' + ressource_type).subscribe(data => {
       this.dataressources2 = data;
+      for (const el1 of this.RessourcesHTTPArray) {
+        this.RessourcesHTTPArray.splice(el1);
+      }
       for (const elt of this.dataressources2.ressources.ressourceconfigname) {
         this.RessourcesHTTPArray.push(elt);
       }
@@ -502,6 +576,9 @@ export class DocsComponent implements OnInit {
 
     this.http.get('http://' + this.serviceUrl + ':9920/getRessources?ressource_type=' + ressource_type).subscribe(data => {
       this.dataressources3 = data;
+      for (const el1 of this.RessourcesEMSArray) {
+        this.RessourcesEMSArray.splice(el1);
+      }
       for (const elt of this.dataressources3.ressources.ressourceconfigname) {
         this.RessourcesEMSArray.push(elt);
       }
@@ -512,6 +589,9 @@ export class DocsComponent implements OnInit {
 
     this.http.get('http://' + this.serviceUrl + ':9920/getRessources?ressource_type=' + ressource_type).subscribe(data => {
       this.dataressources4 = data;
+      for (const el1 of this.RessourcesFTPArray) {
+        this.RessourcesFTPArray.splice(el1);
+      }
       for (const elt of this.dataressources4.ressources.ressourceconfigname) {
         this.RessourcesFTPArray.push(elt);
       }
@@ -519,6 +599,7 @@ export class DocsComponent implements OnInit {
     });
   }
   OnAddJDBC(name2: string) {
+    this.showDetails = false;
     this.addexistantJDBC = false;
     this.addexistantHTTP = false;
     this.addexistantFTP = false;
@@ -533,6 +614,7 @@ export class DocsComponent implements OnInit {
     this.addexistantEMS = false;
     this.addHTTP = !this.addHTTP;
     this.showdivfail = false;
+    this.showDetails = false;
   }
   OnAddEMS(name2: string) {
     this.addexistantJDBC = false;
@@ -541,6 +623,7 @@ export class DocsComponent implements OnInit {
     this.addexistantEMS = false;
     this.addEMS = !this.addEMS;
     this.showdivfail = false;
+    this.showDetails = false;
   }
   OnAddFTP(name2: string) {
     this.addexistantJDBC = false;
@@ -549,6 +632,7 @@ export class DocsComponent implements OnInit {
     this.addexistantEMS = false;
     this.addFTP = !this.addFTP;
     this.showdivfail = false;
+    this.showDetails = false;
   }
 
 

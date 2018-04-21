@@ -15,6 +15,7 @@ import { OperationCall } from '../operation-call';
 
 
 
+
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
@@ -46,18 +47,23 @@ export class EmailComponent implements OnInit {
   public wsdlfile: any;
   public jsonWsdl: any;
   public dataOps: any;
+
   public addLog: boolean;
   public successupload: boolean;
   public addCallSucc: boolean;
   public addCallFail: boolean;
   public displayOperationsList: boolean;
+  public downloadSuccess: boolean;
+  public output: any;
+  public location: any;
+  public url: any;
   public SelectedOperations: Array<string> = [];
   public FinalOperations: Array<OperationCall> = [];
   WsdLOpsArray: Array<string> = [];
   elm: OperationCall = {};
   pclient: string;
   ptype: string;
-
+  public name: string;
   constructor(
     private route: ActivatedRoute,
     private router: Router, private http: HttpClient) {
@@ -68,7 +74,7 @@ export class EmailComponent implements OnInit {
   // tslint:disable-next-line:no-unused-expression
   ngOnInit(): void {
     // On Initi Show Only Division of Actions
-    this.serviceUrl = '192.168.110.224';
+    this.serviceUrl = '192.168.110.186';
     this.uploadwsdlfile = false;
     this.uploadwsdlurl = false;
     this.displayOperations = false;
@@ -95,7 +101,7 @@ export class EmailComponent implements OnInit {
     console.log(this.operation);
   }
 
-  // Submitted Operations are about to be created 
+  // Submitted Operations are about to be created
   onSubmitOp() {
     console.log(JSON.stringify(this.OperationsArray));
     // tslint:disable-next-line:max-line-length
@@ -107,7 +113,7 @@ export class EmailComponent implements OnInit {
       console.log(data);
       this.data = data;
       if (this.data.GenerateOperationResponse.Status === 'FAILED') {
-      this.OperationsNotAdded = true;
+        this.OperationsNotAdded = true;
         this.OperationsAdded = false;
         this.operation = false;
       }
@@ -135,9 +141,7 @@ export class EmailComponent implements OnInit {
 
   // tslint:disable-next-line:one-line
   // Redirect to Add Ressources page, attaching Project Name in the Query
-  AddRessources() {
-    this.router.navigate(['./docs'], { queryParams: { project: this.pname } });
-  }
+
   // Redirect to Add Ressources page, attaching Project Name in the Query
   AddJMS() {
     this.router.navigate(['./calendar'], { queryParams: { project: this.pname, type: this.ptype, client: this.pclient } });
@@ -148,7 +152,7 @@ export class EmailComponent implements OnInit {
     this.uploadwsdlurl = !this.uploadwsdlurl;
   }
 
-   // Detect Uploaded file and copy its content in wsdlfile variable
+  // Detect Uploaded file and copy its content in wsdlfile variable
   fileChange(event) {
     this.uploadwsdlurl = false;
     let input = event.target;
@@ -174,7 +178,7 @@ export class EmailComponent implements OnInit {
 
   }
 
-// Submit the Uploaded Wsdl Content, Show contained operations in table
+  // Submit the Uploaded Wsdl Content, Show contained operations in table
   onSubmitUpload(f: NgForm) {
     // tslint:disable-next-line:max-line-length
     this.http.post('http://' + this.serviceUrl + ':8091/CreateWsdl?projectName=' + this.pname + '&WsdlName=WSDL', this.wsdlfile).subscribe(data => {
@@ -200,7 +204,7 @@ export class EmailComponent implements OnInit {
   ShowActions() {
     this.modify = !this.modify;
   }
-// Detect checked and unchecked Operations and modify the temporary List
+  // Detect checked and unchecked Operations and modify the temporary List
   OnChecked(Opname: string, check: boolean) {
     if (check === true) {
       this.SelectedOperations.push(Opname);
@@ -232,13 +236,14 @@ export class EmailComponent implements OnInit {
     console.log(JSON.stringify(this.FinalOperations));
 
   }
-
+  // Check all Operations
   CheckAll(f: NgForm) {
     console.log(f.value);
     console.log(f.value.opnames);
 
   }
 
+  // Log Info Choice
   chooseLogInfo(opselected: string, check: boolean) {
     if (check) {
       this.FinalOperations[this.SelectedOperations.indexOf(opselected)].info = true;
@@ -251,6 +256,7 @@ export class EmailComponent implements OnInit {
     }
   }
 
+  // Log Exception Choice
   chooseLogException(opselected: string, check: boolean) {
     if (check) {
       this.FinalOperations[this.SelectedOperations.indexOf(opselected)].exception = true;
@@ -263,6 +269,7 @@ export class EmailComponent implements OnInit {
     }
   }
 
+  // Create selected Operations in project with choosen Logs
   SubmitOperationsToService() {
     this.addLog = false;
     //  this.addOpsStatus = true
@@ -271,12 +278,39 @@ export class EmailComponent implements OnInit {
     console.log(this.jsonSelectedOperations);
 
     // tslint:disable-next-line:max-line-length
-    this.http.post('http://192.168.110.224:8092/CreateCallOperation?ProjectName=' + this.pname, this.jsonSelectedOperations).subscribe(data => {
+    this.http.post('http://192.168.110.143:8092/CreateCallOperation?ProjectName=' + this.pname, this.jsonSelectedOperations).subscribe(data => {
       console.log(data);
       this.addLogdata = data;
       if (this.addLogdata.Response === "Success") { this.addCallSucc = true; }
       // tslint:disable-next-line:one-line
       else { this.addCallFail = true; }
     });
+    //createxsd
+    this.http.post('http://192.168.110.143:9922/createXSD?project_name=' + this.pname, this.jsonSelectedOperations).subscribe(data => {
+      console.log(data);
+      this.addLogdata = data;
+
+    });
   }
+  AddRessources(name: string) {
+    this.projname = name;
+    console.log(this.projname);
+    this.router.navigate(['./docs'], { queryParams: { project: name } });
+  }
+  /*  Download(name: string) {
+      console.log(this.pname);
+      this.http.get('http://' + this.serviceUrl + ':9923/getPath?project_name=' + this.pname).subscribe(data => {
+        console.log(data);
+        this.output = data.output;
+        //console.log(this.output);
+        this.http.get('http://localhost:3000/download?projectpath=' + this.output + '&name=' + this.pname).subscribe(res => {
+          console.log(this.pname);
+          console.log(res);
+          window.location = res.url;
+        });
+
+      });
+      //window.alert('Success! project downloaded With Success.');
+      //this.downloadSuccess = true;
+    }*/
 }
